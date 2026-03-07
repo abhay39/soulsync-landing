@@ -1,0 +1,31 @@
+.tickerWrapper {
+  background: rgba(147, 51, 234, 0.1);
+  border-bottom: 1px solid rgba(147, 51, 234, 0.2);
+  padding: 8px 16px;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.matchItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.icon {
+  color: var(--secondary);
+}
+
+@media (max-width: 640px) {
+  .matchItem {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,56 @@
+.hero {
+  padding: 120px 24px 80px;
+  text-align: center;
+}
+
+.title {
+  font-size: 56px;
+  margin-bottom: 16px;
+}
+
+.date {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.contentSection {
+  padding: 80px 24px;
+  background: var(--background);
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.legalContent {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.8;
+}
+
+.legalContent h2 {
+  font-size: 28px;
+  margin: 40px 0 20px;
+  color: white;
+}
+
+.legalContent p, .legalContent li {
+  font-size: 17px;
+  margin-bottom: 20px;
+}
+
+.legalContent ul {
+  padding-left: 24px;
+  margin-bottom: 24px;
+}
+
+.legalContent a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 40px;
+  }
+}

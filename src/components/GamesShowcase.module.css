@@ -1,0 +1,175 @@
+.section {
+  background: transparent;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Single block: header + 3 games inside one card */
+.oneBlock {
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.header {
+  text-align: center;
+  padding: 48px 40px 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+.iconCircle {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: var(--primary-soft);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+}
+
+.heading {
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 600;
+  margin: 0 0 12px;
+  font-family: var(--font-heading);
+}
+
+.tagline {
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+
+.gameItem {
+  padding: 32px 28px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  transition: background 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gameItem:last-child {
+  border-right: none;
+}
+
+.gameItem:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.cardIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.cardIcon.iconPrimary {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+.cardIcon.iconSecondary {
+  background: var(--secondary-soft);
+  color: var(--secondary);
+}
+
+.cardIcon.iconAccent {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.cardTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 10px;
+  font-family: var(--font-heading);
+}
+
+.cardDesc {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.55;
+  margin: 0 0 20px;
+  flex: 1;
+}
+
+.cardBadge {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  padding: 8px 16px;
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  border-radius: var(--radius-full);
+  background: transparent;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.gameItem:hover .cardBadge {
+  background: var(--primary-soft);
+  border-color: rgba(168, 85, 247, 0.5);
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .gameItem:nth-child(2) {
+    border-right: none;
+  }
+  
+  .gameItem:nth-child(n+3) {
+    border-top: 1px solid var(--border);
+  }
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gameItem {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 28px 24px;
+  }
+
+  .gameItem:last-child {
+    border-bottom: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 40px 24px 28px;
+  }
+
+  .tagline {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,114 @@
+# Deploys SoulSync landing (Next.js) to cPanel via SSH/SCP.
+# Required secrets: CPANEL_SSH_HOST, CPANEL_SSH_USERNAME, CPANEL_SSH_KEY, CPANEL_SSH_PORT
+# Optional: LANDING_CPANEL_APP_PATH (default: $HOME/soulsync-landing)
+# Optional: LANDING_NODE_BIN_PATH - directory containing node/npm on the server so npm is found over SSH
+#   (e.g. /home/USER/nodevenv/soulsync-landing/22/bin — find it in cPanel "Setup Node.js App" > Node.js version path)
+name: Deploy SoulSync Landing to cPanel
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Next.js
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Create Production Build Archive
+        run: |
+          tar -czf /tmp/deploy-landing.tar.gz \
+            --exclude=node_modules \
+            --exclude=.git \
+            --exclude=.github \
+            --exclude=deploy-landing.tar.gz \
+            . || [[ $? -eq 1 ]]
+          mv /tmp/deploy-landing.tar.gz "$GITHUB_WORKSPACE/"
+          echo "Archive contents (must include package.json, .next):"
+          tar -tzf "$GITHUB_WORKSPACE/deploy-landing.tar.gz" | head -30
+
+      - name: Prepare Target Directory
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.CPANEL_SSH_HOST }}
+          username: ${{ secrets.CPANEL_SSH_USERNAME }}
+          key: ${{ secrets.CPANEL_SSH_KEY }}
+          port: ${{ secrets.CPANEL_SSH_PORT }}
+          script: |
+            TARGET="${{ secrets.LANDING_CPANEL_APP_PATH }}"
+            [ -z "$TARGET" ] && TARGET="$HOME/soulsync-landing"
+            mkdir -p "$TARGET"
+
+      - name: Copy Archive to cPanel via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.CPANEL_SSH_HOST }}
+          username: ${{ secrets.CPANEL_SSH_USERNAME }}
+          key: ${{ secrets.CPANEL_SSH_KEY }}
+          port: ${{ secrets.CPANEL_SSH_PORT }}
+          source: "deploy-landing.tar.gz"
+          target: "."
+          strip_components: 0
+          rm: false
+          debug: true
+
+      - name: Extract Archive and Restart App
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.CPANEL_SSH_HOST }}
+          username: ${{ secrets.CPANEL_SSH_USERNAME }}
+          key: ${{ secrets.CPANEL_SSH_KEY }}
+          port: ${{ secrets.CPANEL_SSH_PORT }}
+          script: |
+            set -e
+            TARGET="${{ secrets.LANDING_CPANEL_APP_PATH }}"
+            [ -z "$TARGET" ] && TARGET="$HOME/soulsync-landing"
+            NODE_BIN="${{ secrets.LANDING_NODE_BIN_PATH }}"
+            
+            bash -l -c '
+              set -e
+              TARGET="'"$TARGET"'"
+              NODE_BIN="'"$NODE_BIN"'"
+              cd "$TARGET"
+              tar -xzf $HOME/deploy-landing.tar.gz
+              rm -f $HOME/deploy-landing.tar.gz
+              
+              if [ ! -f package.json ]; then
+                echo "ERROR: package.json missing after extract."
+                exit 1
+              fi
+              
+              
+              if [ -n "$NODE_BIN" ] && [ -x "$NODE_BIN/npm" ]; then
+                "$NODE_BIN/npm" ci --omit=dev
+              elif command -v npm >/dev/null 2>&1; then
+                if [ -f package-lock.json ]; then
+                  npm ci --omit=dev
+                else
+                  npm install --omit=dev
+                fi
+              else
+                echo "ERROR: npm not found. Set LANDING_NODE_BIN_PATH to the bin dir (e.g. /home/USER/nodevenv/soulsync-landing/22/bin)."
+                exit 127
+              fi
+              
+              mkdir -p tmp && touch tmp/restart.txt
+            '

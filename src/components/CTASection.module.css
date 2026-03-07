@@ -1,0 +1,169 @@
+.section {
+  padding: var(--space-section) 24px;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-section-mobile) 16px;
+  }
+}
+
+.card {
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+  padding: 56px 40px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(
+    165deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.02) 50%,
+    rgba(168, 85, 247, 0.08) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 0 0 1px rgba(168, 85, 247, 0.15),
+    0 24px 48px -12px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  text-align: center;
+}
+
+.bgGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    rgba(168, 85, 247, 0.2) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+}
+
+.logoWrap {
+  margin-bottom: 24px;
+}
+
+.logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.title {
+  font-size: clamp(32px, 5vw, 44px);
+  font-weight: 600;
+  color: var(--foreground);
+  margin: 0 0 16px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.highlight {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.description {
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 auto 40px;
+  max-width: 480px;
+  line-height: 1.55;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.storeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--foreground);
+  text-decoration: none;
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.storeBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.2);
+}
+
+.btnText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.25;
+  text-align: left;
+}
+
+.btnText span {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.btnText strong {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 48px 24px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .logoWrap {
+    margin-bottom: 20px;
+  }
+
+  .description {
+    margin-bottom: 32px;
+    font-size: 16px;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .storeBtn {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+
+  .btnText {
+    align-items: flex-start;
+  }
+}
