@@ -6,31 +6,49 @@ import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
 import Image from 'next/image';
 
-const testimonials = [
+const DEFAULT_TESTIMONIALS = [
   {
     name: "Aarav",
     age: 22,
-    text: "SoulSync's vibe quiz actually works! I met someone who shares my love for obscure 90s anime and late-night coding sessions.",
+    comment: "SoulSync's vibe quiz actually works! I met someone who shares my love for obscure 90s anime and late-night coding sessions.",
     rating: 5,
-    avatar: "/assets/avatar1.png"
   },
   {
     name: "Ishita",
     age: 21,
-    text: "Finally, a dating app that isn't just about swiping. The video intros made it so much easier to tell if there was actual chemistry.",
+    comment: "Finally, a dating app that isn't just about swiping. The video intros made it so much easier to tell if there was actual chemistry.",
     rating: 5,
-    avatar: "/assets/avatar2.png"
   },
   {
     name: "Rohan",
     age: 23,
-    text: "Matched with my now-girlfriend through a game of 'Two Truths and a Lie' on SoulSync. It's the most fun I've had on a dating app.",
+    comment: "Matched with my now-girlfriend through a game of 'Two Truths and a Lie' on SoulSync. It's the most fun I've had on a dating app.",
     rating: 5,
-    avatar: "/assets/avatar3.png"
   }
 ];
 
 const Testimonials = () => {
+  const [items, setItems] = React.useState<any[]>([]);
+
+  React.useEffect(() => {
+    const fetchFeedback = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/auth/users/feedback`);
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setItems(data.length > 0 ? data : DEFAULT_TESTIMONIALS);
+        } else {
+          setItems(DEFAULT_TESTIMONIALS);
+        }
+      } catch (err) {
+        setItems(DEFAULT_TESTIMONIALS);
+      }
+    };
+    fetchFeedback();
+  }, []);
+
+  // Duplicate items for seamless marquee
+  const marqueeItems = [...items, ...items, ...items];
   return (
     <section className={styles.section}>
       <div className={styles.container}>
@@ -45,36 +63,39 @@ const Testimonials = () => {
           <p className={styles.subtitle}>See how thousands of GenZ users are finding their perfect match through compatibility, not just looks.</p>
         </motion.div>
 
-        <div className={styles.grid}>
-          {testimonials.map((t, i) => (
-            <motion.div 
-              key={i}
-              className={styles.card}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <div className={styles.quoteIcon}>
-                <Quote size={24} fill="var(--primary)" stroke="none" />
-              </div>
-              <div className={styles.rating}>
-                {[...Array(t.rating)].map((_, idx) => (
-                  <Star key={idx} size={16} fill="#FFD700" stroke="none" />
-                ))}
-              </div>
-              <p className={styles.text}>"{t.text}"</p>
-              <div className={styles.footer}>
-                <div className={styles.avatarWrap}>
-                  <div className={styles.placeholderAvatar}>{t.name[0]}</div>
+        <div className={styles.marqueeWrapper}>
+          <motion.div 
+            className={styles.marqueeContent}
+            animate={{ x: [0, -432 * (items.length || 3)] }}
+            transition={{ 
+              duration: 20, 
+              repeat: Infinity, 
+              ease: "linear" 
+            }}
+          >
+            {marqueeItems.map((t, i) => (
+              <div key={i} className={styles.card}>
+                <div className={styles.quoteIcon}>
+                  <Quote size={24} fill="var(--primary)" stroke="none" />
                 </div>
-                <div className={styles.info}>
-                  <p className={styles.name}>{t.name}, {t.age}</p>
-                  <p className={styles.status}>Verified User</p>
+                <div className={styles.rating}>
+                  {[...Array(t.rating || 5)].map((_, idx) => (
+                    <Star key={idx} size={16} fill="#FFD700" stroke="none" />
+                  ))}
+                </div>
+                <p className={styles.text}>"{t.comment || t.text}"</p>
+                <div className={styles.footer}>
+                  <div className={styles.avatarWrap}>
+                    <div className={styles.placeholderAvatar}>{t.name[0]}</div>
+                  </div>
+                  <div className={styles.info}>
+                    <p className={styles.name}>{t.name}{t.age ? `, ${t.age}` : ''}</p>
+                    <p className={styles.status}>Verified User</p>
+                  </div>
                 </div>
               </div>
-            </motion.div>
-          ))}
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>

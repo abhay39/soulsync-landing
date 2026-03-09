@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE || process.env.SOULSYNC_API_BASE || 'https://apis.soulsync.co.in/api/v1';
 const ADMIN_KEY = process.env.ADMIN_API_KEY || process.env.SOULSYNC_ADMIN_API_KEY || 'soul_sync_admin_api_key';
 
+console.log(process.env.NEXT_PUBLIC_API_BASE)
+
 export async function GET() {
   const url = `${API_BASE.replace(/\/$/, '')}/admin/stats`;
 

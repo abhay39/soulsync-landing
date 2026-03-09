@@ -8,8 +8,9 @@ import HowItWorks from "@/components/HowItWorks";
 import QuizSection from "@/components/QuizSection";
 import GamesShowcase from "@/components/GamesShowcase";
 import TrustSafety from "@/components/TrustSafety";
-import Testimonials from "@/components/Testimonials";
 import AppShowcase from "@/components/AppShowcase";
+import Testimonials from "@/components/Testimonials";
+import FeedbackSection from "@/components/FeedbackSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
@@ -30,6 +31,7 @@ export default function Home() {
       <TrustSafety />
       <AppShowcase />
       <Testimonials />
+      <FeedbackSection />
       <CTASection />
       <Footer />
     </main>
