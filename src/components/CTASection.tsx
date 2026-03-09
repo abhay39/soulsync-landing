@@ -19,13 +19,26 @@ const CTASection = () => {
         <div className={styles.bgGlow} aria-hidden />
         <div className={styles.content}>
           <div className={styles.logoWrap}>
-            <Image
-              src="/assets/logo.png"
-              alt=""
-              width={56}
-              height={56}
-              className={styles.logo}
-            />
+            <motion.div 
+              className={styles.logoContainer}
+              animate={{ 
+                y: [0, -4, 0],
+                rotate: [0, 2, 0, -2, 0]
+              }}
+              transition={{ 
+                duration: 5, 
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <Image
+                src="/assets/logo.png"
+                alt="SoulSync Logo"
+                width={50}
+                height={50}
+                className={styles.logo}
+              />
+            </motion.div>
           </div>
           <h2 className={styles.title}>
             Ready to find your <span className={styles.highlight}>Soul Match?</span>

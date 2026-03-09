@@ -1,0 +1,128 @@
+.section {
+  padding: var(--space-section) 24px;
+  background: relative;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 80px;
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 64px;
+    text-align: center;
+  }
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(168, 85, 247, 0.1);
+  color: var(--secondary);
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+  border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.title {
+  font-size: clamp(36px, 6vw, 56px);
+  font-weight: 700;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+
+.highlight {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.description {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.featureList {
+  display: grid;
+  gap: 24px;
+}
+
+.featureItem {
+  display: flex;
+  gap: 16px;
+  text-align: left;
+}
+
+.iconWrap {
+  margin-top: 4px;
+}
+
+.featureIcon {
+  color: var(--primary);
+}
+
+.featureTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: var(--foreground);
+}
+
+.featureDesc {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+}
+
+.imageContent {
+  position: relative;
+}
+
+.imageWrap {
+  position: relative;
+  z-index: 1;
+}
+
+.glow {
+  position: absolute;
+  inset: 10%;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
+  filter: blur(60px);
+  z-index: -1;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-xl);
+  transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+  transition: transform 0.5s ease;
+}
+
+.image:hover {
+  transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+}
+
+@media (max-width: 1024px) {
+  .featureItem {
+    justify-content: center;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
