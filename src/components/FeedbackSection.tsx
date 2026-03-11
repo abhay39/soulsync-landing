@@ -35,7 +35,9 @@ const FeedbackSection = () => {
     }
 
     try {
-      const res = await fetch(`https://apis.soulsync.co.in/api/v1/auth/users/feedback`, {
+      const API_BASE = process.env.NEXT_PUBLIC_API_BASE || process.env.SOULSYNC_API_BASE || 'https://apis.soulsync.co.in/api/v1';
+      const url = `${API_BASE.replace(/\/$/, '')}/auth/users/feedback`;
+      const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -33,7 +33,9 @@ const Testimonials = () => {
   React.useEffect(() => {
     const fetchFeedback = async () => {
       try {
-        const res = await fetch(`https://apis.soulsync.co.in/api/v1/auth/users/feedback`);
+        const API_BASE = process.env.NEXT_PUBLIC_API_BASE || process.env.SOULSYNC_API_BASE || 'https://apis.soulsync.co.in/api/v1';
+        const url = `${API_BASE.replace(/\/$/, '')}/auth/users/feedback`;
+        const res = await fetch(url);
         const data = await res.json();
         if (Array.isArray(data)) {
           setItems(data.length > 0 ? data : DEFAULT_TESTIMONIALS);
