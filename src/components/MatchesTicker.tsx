@@ -60,7 +60,7 @@ export default function MatchesTicker() {
             className={styles.matchItem}
           >
             <Heart size={16} className={styles.icon} fill="currentColor" />
-            <span><strong>{currentMatch.user1_name}</strong> and <strong>{currentMatch.user2_name}</strong> just found a match!</span>
+            <span><strong>{currentMatch?.user1_name || 'Someone'}</strong> and <strong>{currentMatch?.user2_name || 'Someone'}</strong> just found a match!</span>
           </motion.div>
         </AnimatePresence>
       </div>
