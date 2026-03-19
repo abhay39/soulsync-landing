@@ -43,8 +43,12 @@ const Footer = () => {
         <div className={styles.social}>
           <h4>Follow Us</h4>
           <div className={styles.icons}>
-            <Instagram size={24} />
-            <Twitter size={24} />
+            <Link href="https://www.instagram.com/_soulsync_trust_first_dating/" target="_blank">
+              <Instagram size={24} />
+            </Link>
+            {/* <Link href="https://twitter.com/soulsync_app" target="_blank">
+              <Twitter size={24} />
+            </Link> */}
           </div>
         </div>
       </div>

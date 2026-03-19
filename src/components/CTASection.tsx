@@ -47,7 +47,7 @@ const CTASection = () => {
             Join thousands of GenZ users dating by vibe. Download SoulSync and experience the difference.
           </p>
           <div className={styles.actions}>
-            <a
+            {/* <a
               href="#"
               className={styles.storeBtn}
               aria-label="Download on the App Store"
@@ -57,9 +57,9 @@ const CTASection = () => {
                 <span>Download on the</span>
                 <strong>App Store</strong>
               </div>
-            </a>
+            </a> */}
             <a
-              href="#"
+              href="https://play.google.com/store/apps/details?id=com.soulsync.datingapp"
               className={styles.storeBtn}
               aria-label="Get it on Google Play"
             >

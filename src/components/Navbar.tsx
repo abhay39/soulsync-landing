@@ -51,9 +51,9 @@ const Navbar = () => {
 
         <div className={styles.desktopCta}>
           <Magnetic strength={0.4}>
-            <button className={styles.cta} type="button">
+            <Link href={"https://play.google.com/store/apps/details?id=com.soulsync.datingapp"} target="_blank" className={styles.cta} type="button">
               Download Now
-            </button>
+            </Link>
           </Magnetic>
         </div>
 
